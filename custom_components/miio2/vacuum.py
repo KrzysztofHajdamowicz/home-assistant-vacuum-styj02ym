@@ -145,10 +145,10 @@ ALL_PROPS = [
     "light_state",
     "is_charge",
     "is_work",
-	"side_brush_hours",
-	"main_brush_hours",
-	"hypa_hours",
-	"mop_hours"
+    "side_brush_hours",
+    "main_brush_hours",
+    "hypa_hours",
+    "mop_hours"
 ]
 
 VACUUM_CARD_PROPS_REFERENCES = {
@@ -411,11 +411,11 @@ class MiroboVacuum2(StateVacuumEntity):
             state = self._vacuum.raw_command('get_prop', ALL_PROPS)
 
             self.vacuum_state = dict(zip(ALL_PROPS, state))
-			
-			self.vacuum_state['main_brush_left'] = self.vacuum_state.pop('main_brush_hours')
-			self.vacuum_state['side_brush_left'] = self.vacuum_state.pop('side_brush_hours')
-			self.vacuum_state['filter_left'] = self.vacuum_state.pop('hypa_hours')
-			self.vacuum_state['sensor_dirty_left'] = self.vacuum_state.pop('mop_hours')
+
+            self.vacuum_state['main_brush_left'] = self.vacuum_state.pop('main_brush_hours')
+            self.vacuum_state['side_brush_left'] = self.vacuum_state.pop('side_brush_hours')
+            self.vacuum_state['filter_left'] = self.vacuum_state.pop('hypa_hours')
+            self.vacuum_state['sensor_dirty_left'] = self.vacuum_state.pop('mop_hours')
 
             for prop in VACUUM_CARD_PROPS_REFERENCES.keys():
                 self.vacuum_state[prop] = self.vacuum_state[VACUUM_CARD_PROPS_REFERENCES[prop]]
