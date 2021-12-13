@@ -3,8 +3,12 @@ import asyncio
 from functools import partial
 import logging
 
-from miio import DeviceException, Vacuum  # pylint: disable=import-error
+from miio import DeviceException, Vacuum, Device  # pylint: disable=import-error
 import voluptuous as vol
+
+from homeassistant.exceptions import PlatformNotReady
+
+from homeassistant.util import slugify
 
 from homeassistant.components.vacuum import (
     ATTR_CLEANED_AREA,
@@ -196,8 +200,23 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     # Create handler
     _LOGGER.info("Initializing with host %s (token %s...)", host, token[:5])
     vacuum = Vacuum(host, token)
+    unique_id = None
 
-    mirobo = MiroboVacuum2(name, vacuum)
+    try:
+        miio_device = Device(host, token)
+        device_info = await hass.async_add_executor_job(miio_device.info)
+        model = device_info.model
+        unique_id = f"{model}-{device_info.mac_address}"
+        _LOGGER.info(
+            "%s %s %s detected",
+            model,
+            device_info.firmware_version,
+            device_info.hardware_version,
+        )
+    except DeviceException as ex:
+        raise PlatformNotReady from ex
+
+    mirobo = MiroboVacuum2(name, vacuum, unique_id)
     hass.data[DATA_KEY][host] = mirobo
 
     async_add_entities([mirobo], update_before_add=True)
@@ -241,10 +260,11 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 class MiroboVacuum2(StateVacuumEntity):
     """Representation of a Xiaomi Vacuum cleaner robot."""
 
-    def __init__(self, name, vacuum):
+    def __init__(self, name, vacuum, unique_id):
         """Initialize the Xiaomi vacuum cleaner robot handler."""
         self._name = name
         self._vacuum = vacuum
+        self._unique_id = unique_id
 
         self._last_clean_point = None
 
@@ -255,6 +275,11 @@ class MiroboVacuum2(StateVacuumEntity):
     def name(self):
         """Return the name of the device."""
         return self._name
+
+    @property
+    def unique_id(self) -> str:
+        """Return the unique id en the entity."""
+        return self._unique_id
 
     @property
     def state(self):
