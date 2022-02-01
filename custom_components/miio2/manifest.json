@@ -3,12 +3,13 @@
   "name": "Xiaomi miio vacuum STYJ02YM",
   "version": "2021.8.0",
   "documentation": "https://github.com/KrzysztofHajdamowicz/home-assistant-vacuum-styj02ym",
+  "issue_tracker": "https://github.com/KrzysztofHajdamowicz/home-assistant-vacuum-styj02ym/issues",
   "requirements": [
     "construct==2.10.56",
-    "python-miio==0.5.9.1"
+    "python-miio==0.5.9.2"
   ],
   "dependencies": [],
   "codeowners": ["@nqkdev", "@KrzysztofHajdamowicz"],
   "config_flow": false,
-  "iot_class": "local_polling"
+  "iot_class": "cloud_polling"
 }
