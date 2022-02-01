@@ -295,7 +295,7 @@ class MiroboVacuum2(StateVacuumEntity):
         return list(sorted(FAN_SPEEDS.keys(), key=lambda s: FAN_SPEEDS[s]))
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the specific state attributes of this vacuum cleaner."""
         attrs = {}
         if self.vacuum_state is not None:
