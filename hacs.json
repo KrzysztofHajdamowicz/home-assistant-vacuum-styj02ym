@@ -4,7 +4,9 @@
     "country": ["FR", "PL"],
     "domains": ["vacuum"],
     "homeassistant": "2021.6.0",
-    "iot_class": "local_poll",
+    "documentation": "https://github.com/KrzysztofHajdamowicz/home-assistant-vacuum-styj02ym",
+    "issue_tracker": "https://github.com/KrzysztofHajdamowicz/home-assistant-vacuum-styj02ym/issues",
+    "render_readme": true,
     "zip_release": true,
     "filename": "miio2.zip"
 }
