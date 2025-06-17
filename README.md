@@ -1,5 +1,5 @@
 # New maintainer is required.
-My Python and Home Assistant knowledge does not allow me to continue ducktaping this code. Any new maintainer will be much appreciated! In the meantime, I recommend switching to https://github.com/nergal/homeassistant-vacuum-viomi
+My Python and Home Assistant knowledge does not allow me to continue ducktaping this code. Any new maintainer will be much appreciated! In the meantime, I recommend switching to https://github.com/DominikWrobel/viomise
 
 ## Hacky Home assistant support for Xiaomi vacuum STYJ02YM
 
